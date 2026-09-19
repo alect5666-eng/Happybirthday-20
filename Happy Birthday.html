@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💗</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    overflow:hidden;
+    font-family:Arial,"Noto Sans Thai",sans-serif;
+}
+
+.page{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    background:
+        radial-gradient(circle at top,#ffc1dd,#ff5c9d 40%,#731d50 75%,#170711);
+}
+
+.card{
+    width:90%;
+    max-width:420px;
+    padding:35px 25px;
+    border-radius:30px;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.3);
+    backdrop-filter:blur(15px);
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+    animation:show 1s ease;
+}
+
+.icon{
+    font-size:65px;
+    margin-bottom:15px;
+}
+
+h1{
+    font-size:32px;
+    margin-bottom:18px;
+}
+
+.message{
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:25px;
+}
+
+button{
+    border:none;
+    outline:none;
+    padding:15px 30px;
+    border-radius:50px;
+    background:white;
+    color:#f04483;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+    transition:.2s;
+}
+
+button:active{
+    transform:scale(.92);
+}
+
+#voicePage{
+    display:none;
+}
+
+#letterPage{
+    display:none;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* ปุ่มเสียง */
+.soundBtn{
+    font-size:20px;
+    padding:16px 35px;
+}
+
+.status{
+    margin-top:18px;
+    font-size:14px;
+    opacity:.85;
+}
+
+/* เค้ก */
+.cake{
+    position:relative;
+    width:220px;
+    height:170px;
+    margin:10px auto 20px;
+}
+
+.plate{
+    position:absolute;
+    bottom:0;
+    left:10px;
+    width:200px;
+    height:18px;
+    border-radius:50%;
+    background:white;
+}
+
+.cakeBody{
+    position:absolute;
+    bottom:18px;
+    left:30px;
+    width:160px;
+    height:85px;
+    border-radius:12px 12px 20px 20px;
+    background:linear-gradient(#ff9bc4,#ff4389);
+}
+
+.cream{
+    position:absolute;
+    bottom:87px;
+    left:25px;
+    width:170px;
+    height:30px;
+    border-radius:50%;
+    background:white;
+}
+
+.candle{
+    position:absolute;
+    bottom:112px;
+    left:103px;
+    width:15px;
+    height:45px;
+    border-radius:5px;
+    background:white;
+}
+
+.flame{
+    position:absolute;
+    bottom:153px;
+    left:103px;
+    width:17px;
+    height:26px;
+    border-radius:50%;
+    background:#ffd84d;
+    box-shadow:0 0 25px #ffd84d;
+    animation:flame .5s infinite alternate;
+}
+
+/* หัวใจ */
+.heart{
+    position:absolute;
+    bottom:-40px;
+    pointer-events:none;
+    animation:float 5s linear forwards;
+}
+
+@keyframes show{
+    from{
+        opacity:0;
+        transform:translateY(30px) scale(.9);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+@keyframes flame{
+    from{transform:scale(.9)}
+    to{transform:scale(1.15)}
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0) scale(.6);
+        opacity:0;
+    }
+    10%{
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-110vh) scale(1.4) rotate(20deg);
+        opacity:0;
+    }
+}
+
+@media(max-width:380px){
+    h1{
+        font-size:27px;
+    }
+
+    .message{
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     หน้าแรก
+========================= -->
+<section id="startPage" class="page">
+
+    <div class="card">
+
+        <div class="icon">🎁</div>
+
+        <h1>มีอะไรอยากให้ฟัง 💗</h1>
+
+        <div class="message">
+            วันนี้เป็นวันพิเศษของคนพิเศษนะ 🎂<br>
+            ก่อนจะไปอ่านคำอวยพร<br>
+            อยากให้กดฟังสิ่งนี้ก่อนนะ 💕
+        </div>
+
+        <button onclick="goVoice()">
+            🎧 กดเพื่อฟัง
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     หน้าเสียง
+========================= -->
+<section id="voicePage" class="page">
+
+    <div class="card">
+
+        <div class="icon">🎧💗</div>
+
+        <h1>ฟังให้จบนะ</h1>
+
+        <div class="message">
+            มีบางอย่างที่อยากบอก<br>
+            จากใจจริงเลยนะ ❤️
+        </div>
+
+        <!-- ไฟล์เสียง -->
+        <audio id="birthdayAudio" preload="auto">
+            <source src="birthday.mp3" type="audio/mpeg">
+        </audio>
+
+        <button id="playBtn" class="soundBtn" onclick="playVoice()">
+            🔊 กดฟังเสียง
+        </button>
+
+        <div id="status" class="status">
+            กดปุ่มด้านบนเพื่อเริ่มฟัง 💕
+        </div>
+
+        <!-- ซ่อนไว้ก่อน -->
+        <button
+            id="nextBtn"
+            class="hidden"
+            onclick="goLetter()"
+            style="margin-top:20px;">
+            💌 ไปอ่านคำอวยพร
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     หน้าคำอวยพร
+========================= -->
+<section id="letterPage" class="page">
+
+    <div class="card">
+
+        <div class="icon">🎂</div>
+
+        <h1>Happy Birthday 💗</h1>
+
+        <div class="cake">
+
+            <div class="flame"></div>
+
+            <div class="candle"></div>
+
+            <div class="cream"></div>
+
+            <div class="cakeBody"></div>
+
+            <div class="plate"></div>
+
+        </div>
+
+        <div class="message">
+
+          ສຸກສັນວັນເກີດເດີຫນູປີນີ້້ກະໃຫຍ່ຂື້ນອີກປີແລ້ວວວຂໍໃຫ້ໂຕມີຄວາມສຸກຫຼາຍເດີ
+          
+          ຢູ່ນຳເພີ່ນໄປດົນດົນນເລີຍແລ້ວຂໍໃຫ້ປີນີ້ເປັນປີທີ່ດີສຳລັບໂຕເດີ
+           ເພີ່ນຮັກໂຕເດີຄົນເກັ່ງຂອງເພີ່ນນນນ 
+           ອໍໍໍລືມເລີຍຂໍໃຫ້ເຮົາມີຄວາມຊົງຈຳດີດີແບບນີ້ໄປທຸກປີເລີຍຍຍຍ🎂💗<br><br>
+
+
+            <b>Happy Birthday นะ 🎀</b>
+
+        </div>
+
+        <button onclick="makeHearts()">
+            ❤️ รักนะ
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+const startPage = document.getElementById("startPage");
+const voicePage = document.getElementById("voicePage");
+const letterPage = document.getElementById("letterPage");
+
+const audio = document.getElementById("birthdayAudio");
+const playBtn = document.getElementById("playBtn");
+const nextBtn = document.getElementById("nextBtn");
+const statusText = document.getElementById("status");
+
+
+/* =========================
+   เปิดหน้าฟังเสียง
+========================= */
+
+function goVoice(){
+
+    startPage.style.opacity="0";
+
+    setTimeout(function(){
+
+        startPage.style.display="none";
+        voicePage.style.display="flex";
+
+    },500);
+}
+
+
+/* =========================
+   เล่นเสียง
+========================= */
+
+function playVoice(){
+
+    audio.play().then(function(){
+
+        playBtn.innerHTML="⏸️ กำลังเล่น...";
+
+        statusText.innerHTML=
+            "กำลังเล่นเสียงให้ฟังนะ 💗";
+
+    }).catch(function(){
+
+        statusText.innerHTML=
+            "กดปุ่มอีกครั้งเพื่อเล่นเสียง 🎧";
+
+    });
+
+}
+
+
+/* =========================
+   เมื่อเสียงเล่นจบ
+========================= */
+
+audio.addEventListener("ended",function(){
+
+    playBtn.innerHTML="🔁 ฟังอีกครั้ง";
+
+    statusText.innerHTML=
+        "ฟังจบแล้วนะ 💕";
+
+    nextBtn.classList.remove("hidden");
+
+    makeHearts();
+
+});
+
+
+/* =========================
+   ถ้ากดเล่นแล้ว
+   ให้ปุ่มอ่านคำอวยพรแสดงทันที
+   เพื่อไม่บังคับให้ต้องฟังจนจบ
+========================= */
+
+audio.addEventListener("play",function(){
+
+    setTimeout(function(){
+
+        nextBtn.classList.remove("hidden");
+
+    },1000);
+
+});
+
+
+/* =========================
+   ไปหน้าคำอวยพร
+========================= */
+
+function goLetter(){
+
+    voicePage.style.opacity="0";
+
+    setTimeout(function(){
+
+        voicePage.style.display="none";
+        letterPage.style.display="flex";
+        letterPage.style.opacity="1";
+
+        makeHearts();
+
+    },600);
+
+}
+
+
+/* =========================
+   หัวใจลอย
+========================= */
+
+function makeHearts(){
+
+    const hearts=[
+        "❤️",
+        "💕",
+        "💗",
+        "💖",
+        "💓",
+        "💞",
+        "💘"
+    ];
+
+    for(let i=0;i<25;i++){
+
+        setTimeout(function(){
+
+            const heart=document.createElement("div");
+
+            heart.className="heart";
+
+            heart.innerHTML=
+                hearts[Math.floor(Math.random()*hearts.length)];
+
+            heart.style.left=
+                Math.random()*100+"vw";
+
+            heart.style.fontSize=
+                (20+Math.random()*30)+"px";
+
+            heart.style.animationDuration=
+                (3+Math.random()*3)+"s";
+
+            letterPage.appendChild(heart);
+
+            setTimeout(function(){
+                heart.remove();
+            },6000);
+
+        },i*100);
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
